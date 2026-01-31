@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Kioo Store</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #e0f2fe;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .register-card {
+            background-color: #ffffff;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+
+            width: 100%;
+            max-width: 650px;
+            margin: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h2 {
+            color: #3b82f6;
+            margin: 0;
+            font-size: 2.2rem;
+            text-transform: lowercase;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .input-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+             font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .input-group input, .input-group select {
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.75rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .btn-register {
+            width: 100%;
+            padding: 14px;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 1rem;
+        }
+
+        .btn-register:hover {
+            background-color: #2563eb;
+        }
+
+        .footer-links {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .footer-links a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                flex-direction: column;
+                gap: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-card">
+        <div class="header">
+            <h2>kioo store</h2>
+            <p>Lengkapi data diri untuk mendaftar</p>
+        </div>
+
+        <form id="multiStepForm">
+            <div class="form-row">
+                <div class="input-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" placeholder="Nama Lengkap" required>
+                </div>
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="username_kioo" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="kioo@example.com" required>
+                </div>
+                <div class="input-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="08123456xxx" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="input-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" required>
+                </div>
+                <div class="input-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" required>
+                        <option value="" disabled selected>Pilih Gender</option>
+                        <option value="male">Laki-laki</option>
+                        <option value="female">Perempuan</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="••••••••">
+                    <div id="passwordError" class="error-message">Password wajib diisi!</div>
+                </div>
+                <div class="input-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="••••••••">
+                    <div id="matchError" class="error-message">Password tidak cocok!</div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-register">Buat Akun Sekarang</button>
+        </form>
+
+        <div class="footer-links">
+            Sudah punya akun? <a href="../index.html">Masuk di sini</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('multiStepForm').addEventListener('submit', function(event) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const passwordError = document.getElementById('passwordError');
+            const matchError = document.getElementById('matchError');
+            
+            let isValid = true;
+
+            passwordError.style.display = 'none';
+            matchError.style.display = 'none';
+
+            if (password.trim() === "") {
+                passwordError.style.display = 'block';
+                isValid = false;
+            }
+
+            if (password !== confirmPassword) {
+                matchError.style.display = 'block';
+                isValid = false;
+            }
+
+            if (!isValid) {
+                event.preventDefault();
+            } else {
+                alert('Pendaftaran Berhasil! Data Anda telah tersimpan.');
+            }
+        });
+    </script>
+
+</body>
+</html>
